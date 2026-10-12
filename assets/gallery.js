@@ -24,7 +24,7 @@ window.createSamplingGallery = (item, {icons, waitForMedia, waitForSeekable, for
       nfe.append(make('sup','',sample.nfe==='dagger' ? '\u2020' : '*'));
     }
     label.append(nfe,make('span','',sample.label));
-    if (item.differentSamples) label.append(make('span','gallery-sample-index',`Sample ${sample.sample}`));
+    if (item.differentSamples && item.showSampleLabels!==false) label.append(make('span','gallery-sample-index',`Sample ${sample.sample}`));
     const open = make('a','gallery-open');
     open.href = sample.src;
     open.target = '_blank'; open.rel = 'noopener';
