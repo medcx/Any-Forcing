@@ -558,28 +558,6 @@
     });
   });
 
-  const citation = `@misc{anyforcing,\n  title = {Any Forcing: ${data.config.subtitle}},\n  url   = {${data.config.project_url}}\n}`;
-  byId('bibtex').textContent = citation;
-  byId('copy-citation').addEventListener('click', async () => {
-    try {
-      if (navigator.clipboard && window.isSecureContext) await navigator.clipboard.writeText(citation);
-      else {
-        const textarea = document.createElement('textarea');
-        textarea.value = citation;
-        textarea.style.cssText = 'position:fixed;left:-9999px;top:0';
-        document.body.append(textarea);
-        textarea.select();
-        const success = document.execCommand('copy');
-        textarea.remove();
-        if (!success) throw new Error('Clipboard unavailable');
-      }
-      byId('copy-status').textContent = 'Citation copied.';
-      byId('copy-citation').innerHTML = '<i data-lucide="check"></i>';
-      icons();
-      setTimeout(() => { byId('copy-citation').innerHTML = '<i data-lucide="copy"></i>'; icons(); }, 1800);
-    } catch { byId('copy-status').textContent = 'Clipboard unavailable. Select the citation text to copy it.'; }
-  });
-
   const sectionObserver = new IntersectionObserver(entries => entries.forEach(entry => {
     if (!entry.isIntersecting) return;
     document.querySelectorAll('.site-header nav a').forEach(a => a.classList.toggle('active', a.hash === `#${entry.target.id}`));
