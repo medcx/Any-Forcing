@@ -354,28 +354,28 @@
 
   const benchmarks = {
     short: {
-      two: { label: 'First 2 steps / Rest 1 step', rows: [
+      two: { label: 'First 2 steps / Rest 1 step', nfe: {steps:1,first:2}, rows: [
         ['Self Forcing',82.25,83.16,78.62], ['Causal Forcing',81.87,82.66,78.73],
         ['ASD',81.70,82.29,79.32], ['One Forcing',84.01,85.11,79.59],
         ['Any Forcing',84.79,85.83,80.64]] },
-      four: { label: 'First 4 steps / Rest 1 step', rows: [
+      four: { label: 'First 4 steps / Rest 1 step', nfe: {steps:1,first:4}, rows: [
         ['Self Forcing',83.08,83.73,80.50], ['Causal Forcing',83.06,83.75,80.28],
         ['ASD',82.74,83.08,81.35], ['One Forcing',84.35,85.52,79.65],
         ['Any Forcing',85.06,86.19,80.54]] },
-      uniform: { label: 'Uniform 4-step sampling', rows: [
+      uniform: { label: 'Uniform 4-step sampling', nfe: {steps:4,first:4}, rows: [
         ['CausVid',83.05,84.14,78.70], ['rCM',83.11,84.48,77.65],
         ['Self Forcing',84.20,84.88,81.48], ['Causal Forcing',85.08,86.19,80.64],
         ['Any Forcing',85.09,86.18,80.73]] },
-      uniformTwo: { label: 'Uniform 2-step sampling', rows: [
+      uniformTwo: { label: 'Uniform 2-step sampling', nfe: {steps:2,first:2}, rows: [
         ['CausVid',81.03,82.26,76.11], ['rCM',81.06,83.23,72.34],
         ['Self Forcing',81.79,83.13,76.40], ['Causal Forcing',84.03,85.18,79.40],
         ['Any Forcing',84.89,86.08,80.12]] },
     },
     long: {
-      two: { label: 'First 2 steps / Rest 1 step', rows: [
+      two: { label: 'First 2 steps / Rest 1 step', nfe: {steps:1,first:2}, rows: [
         ['Infinity RoPE',84.13,85.56,78.42], ['Deep Forcing',84.06,85.30,79.10],
         ['Relax Forcing',83.76,85.10,78.41], ['Any Forcing',84.53,85.73,79.71]] },
-      four: { label: 'First 4 steps / Rest 1 step', rows: [
+      four: { label: 'First 4 steps / Rest 1 step', nfe: {steps:1,first:4}, rows: [
         ['Infinity RoPE',84.51,85.83,79.22], ['Deep Forcing',84.33,85.43,79.91],
         ['Relax Forcing',84.09,85.27,79.40], ['Any Forcing',84.56,85.64,80.22]] },
     },
@@ -441,9 +441,15 @@
       name.textContent = row[0];
       name.style.background = 'transparent';
       tr.append(name);
-      const params = document.createElement('td');
-      params.textContent = '1.3B';
-      tr.append(params);
+      const nfe = document.createElement('td');
+      nfe.className = 'result-nfe';
+      nfe.append(document.createTextNode(String(entry.nfe.steps)));
+      if (entry.nfe.steps === 1) {
+        const mark = document.createElement('sup');
+        mark.textContent = entry.nfe.first === 4 ? '*' : '\u2020';
+        nfe.append(mark);
+      }
+      tr.append(nfe);
       row.slice(1).forEach((value, column) => {
         const td = document.createElement('td');
         if (!Number.isFinite(value)) {
@@ -513,15 +519,33 @@
         gallery.append(controller.element);
         // Sampling groups load media only when played or scrubbed, not while scrolling.
       });
-    data.gallery.filter(c => filter === 'all' || c.kind === filter).forEach(item => {
+    const singleItems = data.gallery.filter(c => filter === 'all' || c.kind === filter);
+    const singleGrid = document.createElement('div');
+    singleGrid.className = 'gallery-extended-grid';
+    if (singleItems.length) {
+      const heading = document.createElement('div');
+      heading.className = 'gallery-extended-heading';
+      const title = document.createElement('h3');
+      title.textContent = '60-second video generation';
+      const sampling = document.createElement('span');
+      sampling.textContent = 'Any Forcing \u00b7 First 4 / Rest 1';
+      heading.append(title, sampling);
+      singleGrid.append(heading);
+      gallery.append(singleGrid);
+    }
+    singleItems.forEach(item => {
       const figure = document.createElement('figure');
       figure.className = 'gallery-item';
+      figure.dataset.scene = item.id;
+      figure.dataset.kind = item.kind;
       const video = document.createElement('video');
       video.poster = item.poster;
       video.dataset.src = item.src;
+      video.dataset.duration = item.duration;
       video.preload = 'none';
       video.controls = true;
       video.muted = true;
+      video.loop = true;
       video.playsInline = true;
       video.setAttribute('aria-label', item.title);
       video.addEventListener('play', () => {
@@ -535,10 +559,10 @@
       heading.textContent = item.title;
       const meta = document.createElement('p');
       meta.className = 'gallery-meta';
-      meta.textContent = `${item.kind === 'short' ? 'Short video' : 'Long video'} · ${item.duration.toFixed(1)}s playback`;
+      meta.textContent = `60s \u00b7 ${item.label}`;
       const details = document.createElement('details');
       const summary = document.createElement('summary');
-      summary.textContent = 'Prompt & sample details';
+      summary.textContent = 'Text prompt';
       const prompt = document.createElement('p');
       prompt.textContent = item.prompt;
       const note = document.createElement('p');
@@ -547,7 +571,7 @@
       if (item.note) details.append(note);
       caption.append(heading, meta, details);
       figure.append(video, caption);
-      gallery.append(figure);
+      singleGrid.append(figure);
       lazyObserver.observe(video);
     });
   }

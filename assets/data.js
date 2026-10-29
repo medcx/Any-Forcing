@@ -5,9 +5,9 @@ window.ANY_FORCING_DATA = {
     "authors": [],
     "affiliations": [],
     "paper_url": "",
-    "project_url": "https://medcx.github.io/any-forcing/",
+    "project_url": "https://medcx.github.io/Any-Forcing/",
     "github_owner": "medcx",
-    "repository": "any-forcing"
+    "repository": "Any-Forcing"
   },
   "hero": [
     {
@@ -117,7 +117,53 @@ window.ANY_FORCING_DATA = {
       "note": ""
     }
   ],
-  "gallery": [],
+  "gallery": [
+    {
+      "method": "Any Forcing",
+      "src": "assets/videos/extended-tokyo-street-first4-rest1.mp4",
+      "poster": "assets/posters/extended-tokyo-street-first4-rest1.jpg",
+      "duration": 60.5625,
+      "firstSteps": 4,
+      "id": "extended-tokyo-street",
+      "kind": "extended",
+      "title": "Tokyo after dark",
+      "prompt": "A stylish woman strolls down a bustling Tokyo street, the warm glow of neon lights and animated city signs casting vibrant reflections. She wears a sleek black leather jacket paired with a flowing red dress and black boots, her black purse slung over her shoulder. Sunglasses perched on her nose and a bold red lipstick add to her confident, casual demeanor. The street is damp and reflective, creating a mirror-like effect that enhances the colorful lights and shadows. Pedestrians move about, adding to the lively atmosphere. The scene is captured in a dynamic medium shot with the woman walking slightly to one side, highlighting her graceful strides.",
+      "restSteps": 1,
+      "nfe": "star",
+      "label": "First 4 / Rest 1",
+      "note": ""
+    },
+    {
+      "method": "Any Forcing",
+      "src": "assets/videos/extended-red-helmet-first4-rest1.mp4",
+      "poster": "assets/posters/extended-red-helmet-first4-rest1.jpg",
+      "duration": 60.5625,
+      "firstSteps": 4,
+      "id": "extended-red-helmet",
+      "kind": "extended",
+      "title": "Red-helmet space traveler",
+      "prompt": "A movie trailer in a classic cinematic style, featuring the adventurous journey of a 30-year-old space man wearing a vibrant red wool knitted motorcycle helmet. The scene unfolds against a vast blue sky and a desolate salt desert landscape. Shot on 35mm film, the trailer showcases vivid and rich colors, capturing the hero as he navigates through the harsh terrain with determination. His helmet glints under the sun, adding to the dramatic effect. The background is a mix of sweeping desert vistas and distant horizons, with the occasional shimmer of light reflecting off the salt flats. A dynamic medium shot with a sweeping overhead angle, emphasizing the hero's resilience and the vastness of his adventure.",
+      "restSteps": 1,
+      "nfe": "star",
+      "label": "First 4 / Rest 1",
+      "note": ""
+    },
+    {
+      "method": "Any Forcing",
+      "src": "assets/videos/extended-fluffy-monster-first4-rest1.mp4",
+      "poster": "assets/posters/extended-fluffy-monster-first4-rest1.jpg",
+      "duration": 60.5625,
+      "firstSteps": 4,
+      "id": "extended-fluffy-monster",
+      "kind": "extended",
+      "title": "A curious little monster",
+      "prompt": "A close-up 3D animated scene of a short, fluffy monster kneeling beside a melting red candle. The monster has large, wide eyes and an open mouth, gazing at the flame with a look of wonder and curiosity. Its soft, fluffy fur contrasts with the warm, dramatic lighting that highlights every detail of its gentle, innocent expression. The pose conveys a sense of playfulness and exploration, as if the creature is discovering the world for the first time. The background features a cozy, warmly lit room with subtle hints of a fireplace and soft furnishings, enhancing the overall atmosphere. The use of warm colors and dramatic lighting creates a captivating and inviting scene.",
+      "restSteps": 1,
+      "nfe": "star",
+      "label": "First 4 / Rest 1",
+      "note": ""
+    }
+  ],
   "shortGallery": [
     {
       "id": "panda",
