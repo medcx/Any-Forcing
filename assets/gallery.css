@@ -32,7 +32,7 @@
 .gallery-group-prompt p { padding-top: 12px; font-size: 12px; }
 .gallery-group-error { color: #f0b3a5; font-size: 12px; margin-top: 12px; }
 .gallery-group-error[hidden] { display: none; }
-.gallery-extended-grid { grid-column: 1 / -1; display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 22px; min-width: 0; }
+.gallery-extended-grid { grid-column: 1 / -1; display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 22px; min-width: 0; }
 .gallery-extended-heading { grid-column: 1 / -1; display: flex; justify-content: space-between; align-items: baseline; gap: 16px; padding-top: 6px; }
 .gallery-extended-heading h3 { font-size: 22px; color: #eff4f0; }
 .gallery-extended-heading>span { font-size: 11px; color: #a8bbb0; }
