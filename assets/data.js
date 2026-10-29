@@ -115,6 +115,44 @@ window.ANY_FORCING_DATA = {
       ],
       "sampling": "One-step comparison",
       "note": ""
+    },
+    {
+      "id": "tokyo-60s",
+      "name": "Tokyo after dark",
+      "kind": "extended",
+      "prompt": "A stylish woman strolls down a bustling Tokyo street, the warm glow of neon lights and animated city signs casting vibrant reflections. She wears a sleek black leather jacket paired with a flowing red dress and black boots, her black purse slung over her shoulder. Sunglasses perched on her nose and a bold red lipstick add to her confident, casual demeanor. The street is damp and reflective, creating a mirror-like effect that enhances the colorful lights and shadows. Pedestrians move about, adding to the lively atmosphere. The scene is captured in a dynamic medium shot with the woman walking slightly to one side, highlighting her graceful strides.",
+      "videos": [
+        {
+          "method": "Any Forcing",
+          "src": "assets/videos/extended-tokyo-street-first4-rest1.mp4",
+          "poster": "assets/posters/extended-tokyo-street-first4-rest1.jpg",
+          "duration": 60.5625,
+          "firstSteps": 4
+        },
+        {
+          "method": "Infinity RoPE",
+          "src": "assets/videos/comparison-tokyo-60s-infinity.mp4",
+          "poster": "assets/posters/comparison-tokyo-60s-infinity.jpg",
+          "duration": 60.5625,
+          "firstSteps": 4
+        },
+        {
+          "method": "Deep Forcing",
+          "src": "assets/videos/comparison-tokyo-60s-deep.mp4",
+          "poster": "assets/posters/comparison-tokyo-60s-deep.jpg",
+          "duration": 60.5625,
+          "firstSteps": 4
+        },
+        {
+          "method": "Relax Forcing",
+          "src": "assets/videos/comparison-tokyo-60s-relax.mp4",
+          "poster": "assets/posters/comparison-tokyo-60s-relax.jpg",
+          "duration": 60.5625,
+          "firstSteps": 4
+        }
+      ],
+      "sampling": "One-step comparison \u00b7 First 4 / Rest 1",
+      "note": ""
     }
   ],
   "gallery": [

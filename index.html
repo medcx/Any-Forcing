@@ -12,14 +12,14 @@
   <link rel="icon" type="image/png" href="assets/figures/logo.png?v=20261029">
   <link rel="stylesheet" href="assets/style.css">
   <link rel="stylesheet" href="assets/theme.css">
-  <link rel="stylesheet" href="assets/dark.css">
+  <link rel="stylesheet" href="assets/dark.css?v=20261030-60s">
   <link rel="stylesheet" href="assets/results.css?v=20261029">
   <link rel="stylesheet" href="assets/gallery.css?v=20261029">
   <script defer src="assets/lucide.min.js"></script>
-  <script defer src="assets/data.js?v=20261029"></script>
+  <script defer src="assets/data.js?v=20261030-60s"></script>
   <script defer src="assets/memory.js"></script>
   <script defer src="assets/gallery.js"></script>
-  <script defer src="assets/app.js?v=20261029"></script>
+  <script defer src="assets/app.js?v=20261030-60s"></script>
 </head>
 <body>
   <a class="skip-link" href="#comparisons">Skip to video comparisons</a>
@@ -75,6 +75,7 @@
         <div class="segmented" role="tablist" aria-label="Video duration">
           <button role="tab" aria-selected="true" id="short-tab" aria-controls="comparison-panel" data-kind="short">5s · Short videos</button>
           <button role="tab" aria-selected="false" id="long-tab" aria-controls="comparison-panel" data-kind="long" tabindex="-1">30s · Long videos</button>
+          <button role="tab" aria-selected="false" id="extended-tab" aria-controls="comparison-panel" data-kind="extended" tabindex="-1">60s · Long videos</button>
         </div>
         <label class="select-wrap">Scene <select id="scene-select" aria-label="Comparison scene"></select></label>
       </div>

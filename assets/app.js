@@ -249,7 +249,8 @@
   window.addEventListener('pointerup', finishScrubbing);
   window.addEventListener('pointercancel', finishScrubbing);
   window.addEventListener('blur', finishScrubbing);
-  byId('late-sequence').addEventListener('click', () => seekComparisons(20));
+  byId('late-sequence').addEventListener('click', () =>
+    seekComparisons(currentCase.kind === 'extended' ? 45 : 20));
 
   function renderCase(caseId) {
     pauseComparisons();
@@ -262,6 +263,7 @@
     byId('case-note').textContent = currentCase.note;
     byId('case-note').hidden = !currentCase.note;
     byId('late-sequence').hidden = !currentCase.videos.every(v => v.duration > 25);
+    byId('late-sequence').title = `Jump to ${currentCase.kind === 'extended' ? 45 : 20} seconds`;
     const grid = byId('comparison-videos');
     grid.replaceChildren();
     grid.className = `comparison-grid ${currentCase.videos.length === 4 ? 'four' : currentCase.videos.length === 2 ? 'two' : ''}`;
@@ -325,7 +327,7 @@
 
   function changeComparisonKind(kind) {
     comparisonKind = kind;
-    const tabs = [...document.querySelectorAll('[data-kind]')];
+    const tabs = [...document.querySelectorAll('.comparison-toolbar [data-kind]')];
     tabs.forEach(tab => {
       const selected = tab.dataset.kind === kind;
       tab.setAttribute('aria-selected', String(selected));
@@ -340,14 +342,18 @@
     select.closest('.select-wrap').hidden = select.options.length < 2;
     renderCase(select.value);
   }
-  document.querySelectorAll('[data-kind]').forEach(tab => {
+  document.querySelectorAll('.comparison-toolbar [data-kind]').forEach(tab => {
     tab.addEventListener('click', () => changeComparisonKind(tab.dataset.kind));
     tab.addEventListener('keydown', event => {
-      if (!['ArrowLeft', 'ArrowRight'].includes(event.key)) return;
+      if (!['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) return;
       event.preventDefault();
-      const kind = comparisonKind === 'short' ? 'long' : 'short';
+      const kinds = [...document.querySelectorAll('.comparison-toolbar [data-kind]')].map(item => item.dataset.kind);
+      const index = kinds.indexOf(comparisonKind);
+      const next = event.key === 'Home' ? 0 : event.key === 'End' ? kinds.length - 1 :
+        (index + (event.key === 'ArrowRight' ? 1 : -1) + kinds.length) % kinds.length;
+      const kind = kinds[next];
       changeComparisonKind(kind);
-      document.querySelector(`[data-kind="${kind}"]`).focus();
+      document.querySelector(`.comparison-toolbar [data-kind="${kind}"]`).focus();
     });
   });
   byId('scene-select').addEventListener('change', event => renderCase(event.target.value));

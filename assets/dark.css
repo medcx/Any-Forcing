@@ -207,6 +207,9 @@ footer { background: #171c19; border-top-color: #3c4b40; }
 }
 @media(max-width:700px) {
   .hero-shade { background: #0b11118a; }
+  .comparison-toolbar .segmented { display: grid; width: 100%; grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .comparison-toolbar .segmented button { min-width: 0; white-space: normal; line-height: 1.4; padding: 9px 6px; }
+  .case-heading { flex-wrap: wrap; }
   .metrics>div:not(:first-child) { border-left: 1px solid var(--line); }
   .video-frame { box-shadow: 0 4px 0 #050906; }
   .memory-demo .animated-track { padding-bottom: 38px; }
