@@ -158,21 +158,6 @@ window.ANY_FORCING_DATA = {
   "gallery": [
     {
       "method": "Any Forcing",
-      "src": "assets/videos/extended-fluffy-monster-first4-rest1.mp4",
-      "poster": "assets/posters/extended-fluffy-monster-first4-rest1.jpg",
-      "duration": 60.5625,
-      "firstSteps": 4,
-      "id": "extended-fluffy-monster-first4",
-      "kind": "extended",
-      "title": "A curious little monster",
-      "prompt": "A close-up 3D animated scene of a short, fluffy monster kneeling beside a melting red candle. The monster has large, wide eyes and an open mouth, gazing at the flame with a look of wonder and curiosity. Its soft, fluffy fur contrasts with the warm, dramatic lighting that highlights every detail of its gentle, innocent expression. The pose conveys a sense of playfulness and exploration, as if the creature is discovering the world for the first time. The background features a cozy, warmly lit room with subtle hints of a fireplace and soft furnishings, enhancing the overall atmosphere. The use of warm colors and dramatic lighting creates a captivating and inviting scene.",
-      "restSteps": 1,
-      "nfe": "star",
-      "label": "First 4 / Rest 1",
-      "note": ""
-    },
-    {
-      "method": "Any Forcing",
       "src": "assets/videos/extended-fluffy-monster-first2-rest1.mp4",
       "poster": "assets/posters/extended-fluffy-monster-first2-rest1.jpg",
       "duration": 60.5625,
@@ -184,6 +169,21 @@ window.ANY_FORCING_DATA = {
       "restSteps": 1,
       "nfe": "dagger",
       "label": "First 2 / Rest 1",
+      "note": ""
+    },
+    {
+      "method": "Any Forcing",
+      "src": "assets/videos/extended-fluffy-monster-first4-rest1.mp4",
+      "poster": "assets/posters/extended-fluffy-monster-first4-rest1.jpg",
+      "duration": 60.5625,
+      "firstSteps": 4,
+      "id": "extended-fluffy-monster-first4",
+      "kind": "extended",
+      "title": "A curious little monster",
+      "prompt": "A close-up 3D animated scene of a short, fluffy monster kneeling beside a melting red candle. The monster has large, wide eyes and an open mouth, gazing at the flame with a look of wonder and curiosity. Its soft, fluffy fur contrasts with the warm, dramatic lighting that highlights every detail of its gentle, innocent expression. The pose conveys a sense of playfulness and exploration, as if the creature is discovering the world for the first time. The background features a cozy, warmly lit room with subtle hints of a fireplace and soft furnishings, enhancing the overall atmosphere. The use of warm colors and dramatic lighting creates a captivating and inviting scene.",
+      "restSteps": 1,
+      "nfe": "star",
+      "label": "First 4 / Rest 1",
       "note": ""
     }
   ],

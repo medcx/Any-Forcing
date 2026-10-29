@@ -385,17 +385,33 @@
         ['Infinity RoPE',84.51,85.83,79.22], ['Deep Forcing',84.33,85.43,79.91],
         ['Relax Forcing',84.09,85.27,79.40], ['Any Forcing',84.56,85.64,80.22]] },
     },
+    extended: {
+      two: { label: 'First 2 steps / Rest 1 step', nfe: {steps:1,first:2}, rows: [
+        ['Infinity RoPE',83.81,85.31,77.81], ['Deep Forcing',83.90,85.21,78.63],
+        ['Relax Forcing',83.67,85.10,77.92], ['Any Forcing',84.23,85.41,79.51]] },
+      four: { label: 'First 4 steps / Rest 1 step', nfe: {steps:1,first:4}, rows: [
+        ['Infinity RoPE',84.12,85.57,78.31], ['Deep Forcing',84.26,85.37,79.79],
+        ['Relax Forcing',84.00,85.29,78.85], ['Any Forcing',84.46,85.69,79.53]] },
+      uniform: { label: 'Uniform 4-step sampling', nfe: {steps:4,first:4}, ranked: false, rows: [
+        ['CausVid',74.92,79.29,57.42], ['LongLive',82.73,83.24,80.69]] },
+    },
   };
+  const resultDurations = {short:'5s',long:'30s',extended:'60s'};
   let resultKind = 'short';
   function renderResults() {
     const entry = benchmarks[resultKind][byId('result-sampling').value];
-    byId('result-caption').textContent = `${resultKind === 'short' ? '5s' : '30s'} generation: ${entry.label}`;
+    const duration = resultDurations[resultKind];
+    byId('result-caption').textContent = `${duration} generation: ${entry.label}`;
+    byId('result-ranking-note').textContent = '480p · 946 prompts · 5 samples per prompt.' +
+      (entry.ranked === false ? '' : ' Best scores are bold; second-best scores are underlined.');
+    byId('long-result-note').hidden = resultKind === 'short' || entry.nfe.steps !== 1;
     const ranks = [1, 2, 3].map(column => [...new Set(entry.rows.map(r => r[column]).filter(Number.isFinite))].sort((a,b) => b-a));
     const ours = entry.rows.find(row => row[0] === 'Any Forcing');
-    byId('score-context').textContent = `${resultKind === 'short' ? '5s' : '30s'} · ${entry.label}`;
+    document.querySelector('.results-overview').hidden = !ours;
+    byId('score-context').textContent = `${duration} · ${entry.label}`;
     const scoreboard = byId('result-scoreboard');
     scoreboard.replaceChildren();
-    ['Total', 'Quality', 'Semantic'].forEach((label,column) => {
+    (ours ? ['Total', 'Quality', 'Semantic'] : []).forEach((label,column) => {
       const value = ours[column+1];
       const place = ranks[column].indexOf(value)+1;
       const article = document.createElement('article');
@@ -463,7 +479,8 @@
           tr.append(td);
           return;
         }
-        const tag = ranks[column][0] === value ? 'strong' : ranks[column][1] === value ? 'u' : 'span';
+        const tag = entry.ranked === false ? 'span' :
+          ranks[column][0] === value ? 'strong' : ranks[column][1] === value ? 'u' : 'span';
         const number = document.createElement(tag);
         number.textContent = value.toFixed(2);
         td.append(number);
@@ -474,7 +491,7 @@
   }
   function changeResults(kind) {
     resultKind = kind;
-    byId('long-result-note').hidden = kind !== 'long';
+    byId('result-panel').setAttribute('aria-labelledby', `${kind}-results-tab`);
     document.querySelectorAll('[data-result-kind]').forEach(tab => {
       const selected = tab.dataset.resultKind === kind;
       tab.setAttribute('aria-selected', String(selected));
@@ -490,9 +507,13 @@
   document.querySelectorAll('[data-result-kind]').forEach(tab => {
     tab.addEventListener('click', () => changeResults(tab.dataset.resultKind));
     tab.addEventListener('keydown', event => {
-      if (!['ArrowLeft', 'ArrowRight'].includes(event.key)) return;
+      if (!['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) return;
       event.preventDefault();
-      changeResults(resultKind === 'short' ? 'long' : 'short');
+      const kinds = Object.keys(benchmarks);
+      const index = kinds.indexOf(resultKind);
+      const next = event.key === 'Home' ? 0 : event.key === 'End' ? kinds.length - 1 :
+        (index + (event.key === 'ArrowRight' ? 1 : -1) + kinds.length) % kinds.length;
+      changeResults(kinds[next]);
       document.querySelector(`[data-result-kind="${resultKind}"]`).focus();
     });
   });

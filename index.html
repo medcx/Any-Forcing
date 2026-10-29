@@ -13,13 +13,13 @@
   <link rel="stylesheet" href="assets/style.css">
   <link rel="stylesheet" href="assets/theme.css">
   <link rel="stylesheet" href="assets/dark.css?v=20261030-60s">
-  <link rel="stylesheet" href="assets/results.css?v=20261029">
+  <link rel="stylesheet" href="assets/results.css?v=20261030-scores60">
   <link rel="stylesheet" href="assets/gallery.css?v=20261029">
   <script defer src="assets/lucide.min.js"></script>
-  <script defer src="assets/data.js?v=20261030-first2"></script>
+  <script defer src="assets/data.js?v=20261030-scores60"></script>
   <script defer src="assets/memory.js"></script>
   <script defer src="assets/gallery.js"></script>
-  <script defer src="assets/app.js?v=20261030-first2"></script>
+  <script defer src="assets/app.js?v=20261030-scores60"></script>
 </head>
 <body>
   <a class="skip-link" href="#comparisons">Skip to video comparisons</a>
@@ -136,13 +136,13 @@
     </section>
     <section class="band content" id="results" aria-labelledby="results-title">
       <div class="section-heading"><div><p class="eyebrow">Quantitative evaluation</p><h2 id="results-title">Flexible steps. Consistent performance.</h2></div><a class="text-link" href="assets/figures/visual_compare.pdf" target="_blank" rel="noopener">Visual comparison figure <i data-lucide="arrow-up-right"></i></a></div>
-      <div class="results-toolbar"><div class="segmented" role="tablist" aria-label="Benchmark duration"><button role="tab" aria-selected="true" data-result-kind="short" aria-controls="result-panel">5s VBench</button><button role="tab" aria-selected="false" data-result-kind="long" aria-controls="result-panel" tabindex="-1">30s VBench</button></div><label class="select-wrap">Sampling <select id="result-sampling" aria-label="Benchmark sampling schedule"></select></label></div>
+      <div class="results-toolbar"><div class="segmented" role="tablist" aria-label="Benchmark duration"><button id="short-results-tab" role="tab" aria-selected="true" data-result-kind="short" aria-controls="result-panel">5s VBench</button><button id="long-results-tab" role="tab" aria-selected="false" data-result-kind="long" aria-controls="result-panel" tabindex="-1">30s VBench</button><button id="extended-results-tab" role="tab" aria-selected="false" data-result-kind="extended" aria-controls="result-panel" tabindex="-1">60s VBench</button></div><label class="select-wrap">Sampling <select id="result-sampling" aria-label="Benchmark sampling schedule"></select></label></div>
       <div class="results-overview">
         <div class="result-identity"><img src="assets/figures/logo.png?v=20261029" width="46" height="42" alt=""><strong>Any Forcing</strong><span id="score-context"></span></div>
         <div id="result-scoreboard" class="result-scoreboard" aria-label="Any Forcing scores and rankings" aria-live="polite" aria-atomic="true"></div>
       </div>
       <div id="result-panel" class="table-wrap" role="tabpanel"><table><caption id="result-caption" class="sr-only"></caption><thead><tr><th scope="col">Method</th><th scope="col">NFE</th><th scope="col">Total ↑</th><th scope="col">Quality ↑</th><th scope="col">Semantic ↑</th></tr></thead><tbody id="result-body"></tbody></table></div>
-      <p class="table-note">480p · 946 prompts · 5 samples per prompt. Best scores are bold; second-best scores are underlined.</p>
+      <p id="result-ranking-note" class="table-note">480p · 946 prompts · 5 samples per prompt. Best scores are bold; second-best scores are underlined.</p>
       <p class="table-note">1<sup>*</sup> and 1<sup>†</sup>: four and two first-frame steps, respectively, followed by one step per frame.</p>
       <p id="long-result-note" class="table-note" hidden>Long-video strategies are compared using the same generator trained with our unified adversarial discriminator.</p>
     </section>
