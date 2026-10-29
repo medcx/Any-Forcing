@@ -534,7 +534,9 @@
       const title = document.createElement('h3');
       title.textContent = '60-second video generation';
       const sampling = document.createElement('span');
-      sampling.textContent = 'Any Forcing \u00b7 First 4 / Rest 1';
+      const firstSteps = [...new Set(singleItems.map(item => item.firstSteps))].join(' / ');
+      const restSteps = [...new Set(singleItems.map(item => item.restSteps || 1))].join(' / ');
+      sampling.textContent = `Any Forcing \u00b7 First ${firstSteps} \u00b7 Rest ${restSteps}`;
       heading.append(title, sampling);
       singleGrid.append(heading);
       gallery.append(singleGrid);
@@ -553,7 +555,7 @@
       video.muted = true;
       video.loop = true;
       video.playsInline = true;
-      video.setAttribute('aria-label', item.title);
+      video.setAttribute('aria-label', `${item.title}: ${item.label}`);
       video.addEventListener('play', () => {
         pauseComparisons();
         galleryControllers.forEach(controller => controller.pause());
