@@ -392,8 +392,6 @@
       four: { label: 'First 4 steps / Rest 1 step', nfe: {steps:1,first:4}, rows: [
         ['Infinity RoPE',84.12,85.57,78.31], ['Deep Forcing',84.26,85.37,79.79],
         ['Relax Forcing',84.00,85.29,78.85], ['Any Forcing',84.46,85.69,79.53]] },
-      uniform: { label: 'Uniform 4-step sampling', nfe: {steps:4,first:4}, ranked: false, rows: [
-        ['CausVid',74.92,79.29,57.42], ['LongLive',82.73,83.24,80.69]] },
     },
   };
   const resultDurations = {short:'5s',long:'30s',extended:'60s'};
