@@ -207,7 +207,6 @@
     updatePlayButton();
     playButton.disabled = true;
     galleryControllers.forEach(controller => controller.pause());
-    document.querySelectorAll('.gallery-item video').forEach(v => v.pause());
     try {
       await Promise.all(group.map(waitForMedia));
       if (!current()) return;
@@ -519,88 +518,36 @@
 
   const gallery = byId('gallery-grid');
   let galleryControllers = [];
-  const lazyObserver = new IntersectionObserver(entries => entries.forEach(entry => {
-    if (!entry.isIntersecting) return;
-    const video = entry.target;
-    if (!video.getAttribute('src')) {
-      video.src = video.dataset.src;
-      video.preload = 'metadata';
+  const extendedGallery = new Map();
+  (data.gallery || []).forEach(sample => {
+    if (!extendedGallery.has(sample.prompt)) {
+      extendedGallery.set(sample.prompt, {
+        id: `extended-generation-${extendedGallery.size + 1}`,
+        kind: sample.kind,
+        title: '60-second video generation',
+        prompt: sample.prompt,
+        videos: [],
+      });
     }
-    lazyObserver.unobserve(video);
-  }), { rootMargin: '250px' });
+    extendedGallery.get(sample.prompt).videos.push({
+      ...sample,
+      schedule: sample.schedule || `first${sample.firstSteps}-rest${sample.restSteps}`,
+    });
+  });
   function renderGallery(filter) {
     galleryControllers.forEach(controller => controller.destroy());
     galleryControllers = [];
-    gallery.querySelectorAll('video').forEach(v => { v.pause(); lazyObserver.unobserve(v); });
     gallery.replaceChildren();
-    [...(data.shortGallery || []),...(data.longGallery || [])]
+    [...(data.shortGallery || []),...(data.longGallery || []),...extendedGallery.values()]
       .filter(item => filter==='all' || item.kind===filter).forEach(item => {
         const controller = window.createSamplingGallery(item, {icons,waitForMedia,waitForSeekable,formatTime,onPlay:() => {
           pauseComparisons();
           galleryControllers.forEach(other => { if (other !== controller) other.pause(); });
-          gallery.querySelectorAll('.gallery-item video').forEach(video => video.pause());
         }});
         galleryControllers.push(controller);
         gallery.append(controller.element);
         // Sampling groups load media only when played or scrubbed, not while scrolling.
       });
-    const singleItems = data.gallery.filter(c => filter === 'all' || c.kind === filter);
-    const singleGrid = document.createElement('div');
-    singleGrid.className = 'gallery-extended-grid';
-    if (singleItems.length) {
-      const heading = document.createElement('div');
-      heading.className = 'gallery-extended-heading';
-      const title = document.createElement('h3');
-      title.textContent = '60-second video generation';
-      const sampling = document.createElement('span');
-      const firstSteps = [...new Set(singleItems.map(item => item.firstSteps))].join(' / ');
-      const restSteps = [...new Set(singleItems.map(item => item.restSteps || 1))].join(' / ');
-      sampling.textContent = `Any Forcing \u00b7 First ${firstSteps} \u00b7 Rest ${restSteps}`;
-      heading.append(title, sampling);
-      singleGrid.append(heading);
-      gallery.append(singleGrid);
-    }
-    singleItems.forEach(item => {
-      const figure = document.createElement('figure');
-      figure.className = 'gallery-item';
-      figure.dataset.scene = item.id;
-      figure.dataset.kind = item.kind;
-      const video = document.createElement('video');
-      video.poster = item.poster;
-      video.dataset.src = item.src;
-      video.dataset.duration = item.duration;
-      video.preload = 'none';
-      video.controls = true;
-      video.muted = true;
-      video.loop = true;
-      video.playsInline = true;
-      video.setAttribute('aria-label', `${item.title}: ${item.label}`);
-      video.addEventListener('play', () => {
-        pauseComparisons();
-        galleryControllers.forEach(controller => controller.pause());
-        gallery.querySelectorAll('video').forEach(v => { if (v !== video) v.pause(); });
-      });
-      const caption = document.createElement('figcaption');
-      caption.className = 'gallery-caption';
-      const heading = document.createElement('h3');
-      heading.textContent = item.title;
-      const meta = document.createElement('p');
-      meta.className = 'gallery-meta';
-      meta.textContent = `60s \u00b7 ${item.label}`;
-      const details = document.createElement('details');
-      const summary = document.createElement('summary');
-      summary.textContent = 'Text prompt';
-      const prompt = document.createElement('p');
-      prompt.textContent = item.prompt;
-      const note = document.createElement('p');
-      note.textContent = item.note;
-      details.append(summary, prompt);
-      if (item.note) details.append(note);
-      caption.append(heading, meta, details);
-      figure.append(video, caption);
-      singleGrid.append(figure);
-      lazyObserver.observe(video);
-    });
   }
   document.querySelectorAll('[data-gallery-filter]').forEach(button => {
     button.addEventListener('click', () => {

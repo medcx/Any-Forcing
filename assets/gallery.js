@@ -10,7 +10,8 @@ window.createSamplingGallery = (item, {icons, waitForMedia, waitForSeekable, for
   root.dataset.scene = item.id;
   root.dataset.kind = item.kind;
   const heading = make('div','gallery-group-heading');
-  heading.append(make('h3','',item.title),make('span','gallery-group-meta',`${item.kind==='long' ? '30s' : '5s'} · Any Forcing`));
+  const durationLabel = {short:'5s',long:'30s',extended:'60s'}[item.kind];
+  heading.append(make('h3','',item.title),make('span','gallery-group-meta',`${durationLabel} · Any Forcing`));
   const grid = make('div','gallery-schedule-grid');
   grid.dataset.columns = item.videos.length;
   const videos = item.videos.map((sample,index) => {
@@ -136,7 +137,13 @@ window.createSamplingGallery = (item, {icons, waitForMedia, waitForSeekable, for
     }
   }
   play.addEventListener('click',() => {
-    if (intent) { pause(); return; }
+    if (intent) {
+      const time = videos[0].currentTime;
+      const align = !busy && !scrubbing;
+      pause();
+      if (align) seek(time);
+      return;
+    }
     const start=busy ? requested : videos[0].currentTime;
     intent=true; error.hidden=true;
     onPlay(); controls();
