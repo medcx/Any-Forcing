@@ -524,7 +524,7 @@
       extendedGallery.set(sample.prompt, {
         id: `extended-generation-${extendedGallery.size + 1}`,
         kind: sample.kind,
-        title: '60-second video generation',
+        title: sample.title,
         prompt: sample.prompt,
         videos: [],
       });
