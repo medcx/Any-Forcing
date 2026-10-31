@@ -151,7 +151,7 @@ window.ANY_FORCING_DATA = {
           "firstSteps": 4
         }
       ],
-      "sampling": "One-step comparison \u00b7 First 4 / Rest 1",
+      "sampling": "One-step comparison",
       "note": ""
     }
   ],
