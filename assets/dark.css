@@ -19,6 +19,7 @@ body { background: var(--base); color: var(--ink); }
 .site-header nav a.active:after { background: var(--blue); }
 .site-header nav a:hover { color: var(--blue); }
 .hero { background: var(--base); }
+.hero-content { transform: translateY(32px); }
 .hero-shade { background: #0b111181; }
 .hero-actions { gap: 28px; margin-top: 52px; }
 .hero-resource-link {
@@ -220,6 +221,7 @@ footer { background: #171c19; border-top-color: #3c4b40; }
   }
 }
 @media(max-width:700px) {
+  .hero-content { transform: translateY(20px); }
   .hero-shade { background: #0b11118a; }
   .hero-actions { gap: 18px; margin-top: 45px; }
   .hero-resource-link { font-size: 14px; }
